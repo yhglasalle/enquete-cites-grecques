@@ -45,6 +45,7 @@ app.js                moteur de l'enquête
 cover.png             couverture
 icon-*.png / icon.svg icônes iPad / PWA
 manifest.webmanifest  installation sur l'écran d'accueil
+sw.js                 cache hors ligne
 gate.json             état d'ouverture (préparation)
 .nojekyll             GitHub Pages
 ```

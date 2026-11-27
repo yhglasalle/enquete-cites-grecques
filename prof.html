@@ -314,10 +314,14 @@
     </div>`;
   }
 
-  function printContent(kind) {
+  function preparePrint(kind) {
     const area = document.getElementById('printArea');
     area.innerHTML = kind === 'key' ? keyHtml() : sheetHtml();
     document.body.classList.add('printing');
+  }
+
+  function printContent(kind) {
+    preparePrint(kind);
     setTimeout(() => window.print(), 60);
   }
 
@@ -327,7 +331,14 @@
     btn.addEventListener('click', () => printContent(btn.dataset.print));
   });
 
+  const printParam = new URLSearchParams(location.search).get('print');
+  if (printParam === 'sheet' || printParam === 'key') setTimeout(() => preparePrint(printParam), 300);
+
   renderCorrige();
+
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  }
 })();
 </script>
 </body>
