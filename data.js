@@ -340,7 +340,7 @@
     },
     q18: {
       id: 'q18', n: 18, act: 6, title: 'L’activité du port',
-      prompt: 'Quelle activité économique est représentée sur la photo ?',
+      prompt: 'Quelle activité économique est représentée sur l’image ?',
       kind: 'choice', doc: 'littoral',
       options: ['La pêche', 'L’agriculture', 'L’industrie'], correct: 0,
       good: 'Oui : des barques, des filets et un petit port de pêche.',

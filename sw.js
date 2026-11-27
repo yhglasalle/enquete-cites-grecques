@@ -1,6 +1,6 @@
 /* Service worker — Le monde des cités grecques
    Cache l'application après le premier chargement pour un usage hors ligne. */
-const CACHE = 'cites-grecques-v1';
+const CACHE = 'cites-grecques-v2';
 const ASSETS = [
   './',
   './index.html',
