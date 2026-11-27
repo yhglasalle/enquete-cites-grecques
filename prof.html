@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050f16">
+<title>Dossier professeur — Le monde des cités grecques</title>
+<style>
+  :root{
+    --night:#050f16; --deep:#071a24; --panel:#0b1822; --panel2:#0e202b;
+    --gold:#e2b264; --gold2:#f7dfae; --ivory:#f4ead6; --muted:#bcb09a; --dim:#8f8677;
+    --line:rgba(226,178,100,.24); --good:#8fbf8a; --red:#d47b6a;
+    --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--night);color:var(--ivory);font-family:var(--sans);line-height:1.6}
+  body{background:radial-gradient(ellipse at 50% 0%,#0a1c26 0%,#050f16 55%,#03090e 100%);min-height:100vh}
+  a{color:var(--gold)}
+  button{font:inherit;color:inherit}
+  .gate{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(3,8,12,.92);backdrop-filter:blur(12px);padding:24px}
+  .gate.hidden{display:none}
+  .gate-card{width:min(460px,100%);background:linear-gradient(180deg,#0c1a24,#08121a);border:1px solid var(--line);border-radius:16px;padding:30px 28px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+  .gate-card .kicker{margin:0 0 8px;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+  .gate-card h1{margin:0 0 8px;font-family:var(--serif);font-weight:400;font-size:30px;color:var(--gold2)}
+  .gate-card p{margin:0 0 20px;color:var(--muted);font-size:14px}
+  .gate-row{display:flex;gap:10px}
+  .gate input{flex:1;min-width:0;padding:12px 14px;border-radius:8px;border:1px solid rgba(244,234,214,.2);background:rgba(0,0,0,.3);color:var(--ivory);font-size:20px;letter-spacing:.3em;outline:none}
+  .gate input:focus{border-color:var(--gold)}
+  .gate .err{min-height:20px;margin:10px 0 0;color:var(--red);font-size:13px}
+  .hint{color:var(--dim);font-size:12px;margin-top:10px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border-radius:8px;border:1px solid rgba(226,178,100,.4);background:rgba(226,178,100,.06);color:var(--gold);font-size:13px;text-decoration:none;cursor:pointer;transition:.18s}
+  .btn:hover{background:rgba(226,178,100,.14);border-color:var(--gold)}
+  .btn.primary{background:linear-gradient(180deg,#f3cf83,#c99434);color:#1b1205;border-color:transparent;font-weight:700}
+  .btn.primary:hover{filter:brightness(1.06)}
+  .page{width:min(1080px,calc(100% - 40px));margin:0 auto;padding:48px 0 64px}
+  .top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-bottom:26px;border-bottom:1px solid rgba(244,234,214,.12)}
+  .top .kicker{margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+  .top h1{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(32px,4.4vw,52px);line-height:1.02;color:var(--gold2)}
+  .top .sub{margin:12px 0 0;color:var(--muted);font-size:15px;max-width:640px}
+  .top-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  section{margin-top:40px}
+  h2{margin:0 0 6px;font-family:var(--serif);font-weight:400;font-size:28px;color:var(--gold2)}
+  .lead{margin:0 0 18px;color:var(--muted);font-size:14px}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .card{background:linear-gradient(180deg,rgba(226,178,100,.06),rgba(226,178,100,.02));border:1px solid rgba(226,178,100,.18);border-radius:12px;padding:16px 18px}
+  .card h3{margin:0 0 5px;font-family:var(--serif);font-weight:400;font-size:18px;color:var(--gold2)}
+  .card p{margin:0;color:#d6cab5;font-size:13.5px}
+  .card .big{font-family:var(--serif);font-size:28px;color:var(--gold);line-height:1}
+  .list{margin:8px 0 0;padding-left:20px;color:#d6cab5;font-size:14px}
+  .list li{margin:4px 0}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:rgba(244,234,214,.02);border:1px solid rgba(244,234,214,.1);border-radius:12px;overflow:hidden}
+  th,td{padding:11px 12px;border-bottom:1px solid rgba(244,234,214,.08);vertical-align:top;text-align:left}
+  th{background:rgba(226,178,100,.08);color:var(--gold2);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+  tr:last-child td{border-bottom:0}
+  td:first-child{white-space:nowrap;color:var(--gold);font-family:var(--serif);font-size:15px}
+  .corrige{display:grid;gap:10px}
+  .qitem{display:grid;grid-template-columns:52px 1fr;gap:14px;padding:15px 16px;border:1px solid rgba(244,234,214,.1);border-left:3px solid var(--gold);border-radius:10px;background:rgba(244,234,214,.02)}
+  .qitem .qn{font-family:var(--serif);font-size:24px;color:var(--gold);line-height:1}
+  .qitem h3{margin:0 0 4px;font-family:var(--serif);font-weight:400;font-size:18px;color:var(--ivory)}
+  .qitem .qp{margin:0 0 6px;color:var(--muted);font-size:13px}
+  .qitem .qa{margin:0;color:#e8dcc6;font-size:14px}
+  .qitem .qa b{color:var(--gold2)}
+  .qitem .note{margin:7px 0 0;color:var(--dim);font-size:12.5px;border-top:1px dashed rgba(244,234,214,.12);padding-top:7px}
+  .qitem .type{display:inline-block;margin-left:8px;padding:2px 7px;border-radius:99px;border:1px solid rgba(226,178,100,.3);color:var(--gold);font-size:9px;letter-spacing:.12em;text-transform:uppercase;vertical-align:2px}
+  .conseils{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .conseil{background:rgba(29,107,120,.09);border:1px solid rgba(29,107,120,.3);border-radius:12px;padding:16px 18px}
+  .conseil h3{margin:0 0 5px;font-family:var(--serif);font-weight:400;font-size:17px;color:#cfe6e6}
+  .conseil p{margin:0;color:#c8d8d6;font-size:13.5px}
+  .credits{color:var(--dim);font-size:13px;border-top:1px solid rgba(244,234,214,.1);padding-top:20px}
+  .credits p{margin:5px 0}
+  .credit-title{color:var(--gold);font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
+  #printArea{display:none}
+  @media (max-width:820px){
+    .cards{grid-template-columns:1fr 1fr}
+    .conseils{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){.cards{grid-template-columns:1fr}.page{padding-top:28px}}
+  @media print{
+    @page{size:A4;margin:14mm}
+    html,body{background:#fff!important;color:#111!important}
+    body.printing > *:not(#printArea){display:none!important}
+    body.printing #printArea{display:block!important;color:#111;background:#fff;font-family:Georgia,serif}
+    #printArea .sheet h1,#printArea .key h1{font-size:20pt;margin:0 0 4mm}
+    #printArea .sheet .meta{font-size:10pt;color:#555;margin:0 0 7mm}
+    #printArea .pq{margin:0 0 5mm;page-break-inside:avoid}
+    #printArea .pn{font-weight:bold;font-size:10pt}
+    #printArea .pp{font-size:10.5pt;margin:1mm 0 2mm}
+    #printArea .pl{border-bottom:1px solid #999;height:7mm}
+    #printArea .foot{margin-top:8mm;border-top:1px solid #999;padding-top:3mm;font-size:8.5pt;color:#555}
+    #printArea .key ol{padding-left:6mm}
+    #printArea .key li{margin-bottom:3.5mm;font-size:10pt;line-height:1.45}
+    #printArea .key .kn{font-weight:bold}
+    #printArea .key .bar{margin-top:6mm;border-top:1px solid #999;padding-top:3mm;font-size:9pt}
+  }
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <form class="gate-card" id="gateForm">
+    <p class="kicker">Dossier professeur</p>
+    <h1>Le monde des cités grecques</h1>
+    <p>Corrigé, déroulé et fiche élève. Cet espace est réservé au professeur.</p>
+    <div class="gate-row">
+      <input id="code" type="password" inputmode="numeric" autocomplete="off" placeholder="Code" aria-label="Code professeur">
+      <button class="btn primary" type="submit">Entrer</button>
+    </div>
+    <p class="err" id="err"></p>
+    <p class="hint">Code par défaut : 2026 (modifiable dans le fichier).</p>
+  </form>
+</div>
+
+<main class="page" id="page">
+  <header class="top">
+    <div>
+      <p class="kicker">Dossier professeur · Histoire · 6<sup>e</sup></p>
+      <h1>Le monde des cités grecques</h1>
+      <p class="sub">Sur la piste de Théodoros — un jeu de piste pour découvrir la cité grecque, les sanctuaires, les mythes et la Méditerranée.</p>
+    </div>
+    <div class="top-actions">
+      <a class="btn primary" href="index.html">Ouvrir l’activité</a>
+      <button class="btn" type="button" data-print="sheet">Imprimer la fiche élève</button>
+      <button class="btn" type="button" data-print="key">Imprimer le corrigé</button>
+    </div>
+  </header>
+
+  <section>
+    <h2>Fiche technique</h2>
+    <p class="lead">Une enquête en binôme, à mener sur iPad en paysage. Les élèves répondent sur une feuille ; l’application raconte, montre les documents et garde un brouillon.</p>
+    <div class="cards">
+      <div class="card"><div class="big">6<sup>e</sup></div><h3>Niveau</h3><p>Histoire — thème 2 : le monde des cités grecques.</p></div>
+      <div class="card"><div class="big">55–60</div><h3>Minutes</h3><p>6 actes, 19 questions, un carnet de conclusions.</p></div>
+      <div class="card"><div class="big">2</div><h3>Par iPad</h3><p>Un binôme, une feuille, un crayon. Sauvegarde locale.</p></div>
+    </div>
+    <div class="cards" style="margin-top:12px">
+      <div class="card">
+        <h3>Objectifs</h3>
+        <ul class="list">
+          <li>Situer la Grèce, la Méditerranée et les étapes du voyage.</li>
+          <li>Décrire une cité grecque et ses composantes.</li>
+          <li>Comprendre un sanctuaire panhellénique et les jeux.</li>
+          <li>Lire un mythe et prélever des indices dans un document.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Compétences</h3>
+        <ul class="list">
+          <li>Se repérer dans l’espace.</li>
+          <li>Analyser un document, une carte, une image.</li>
+          <li>Rédiger une réponse construite.</li>
+          <li>Travailler en binôme et justifier.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Matériel</h3>
+        <ul class="list">
+          <li>Un iPad par binôme, en paysage.</li>
+          <li>Une feuille et un crayon par binôme.</li>
+          <li>L’activité ouverte dans Safari.</li>
+          <li>Facultatif : écouteurs si la classe est bruyante.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Déroulé proposé</h2>
+    <p class="lead">Les durées sont indicatives. Le bouton « Continuer » ne se débloque qu’après l’ouverture des questions de l’étape : les élèves ne peuvent pas sauter le questionnement.</p>
+    <table>
+      <thead><tr><th>Temps</th><th>Étape</th><th>Professeur</th><th>Élèves</th></tr></thead>
+      <tbody>
+        <tr><td>5 min</td><td>Lancement</td><td>Projeter l’écran-titre, lire la mission, Distribuer une feuille par binôme.</td><td>Entrent leurs prénoms, lisent les consignes, ouvrent l’enquête.</td></tr>
+        <tr><td>10 min</td><td>Acte I — Le voyage</td><td>Faire estimer la distance, repérer les mers et le Péloponnèse.</td><td>Q1 à Q3 : lisent la carte, discutent, rédigent.</td></tr>
+        <tr><td>5 min</td><td>Acte II — La chambre</td><td>Laisser déchiffrer Δελφοί sans donner la réponse.</td><td>Q4 : utilisent l’alphabet grec.</td></tr>
+        <tr><td>15 min</td><td>Acte III — Delphes</td><td>Faire distinguer sanctuaire et panhellénique ; expliquer les jeux.</td><td>Q5 à Q9 : plan, jeux, Pythie, chouette.</td></tr>
+        <tr><td>15 min</td><td>Acte IV — Athènes</td><td>Faire décrire l’Acropole et le plan de la cité.</td><td>Q10 à Q12 : Acropole, cité, billet du musée.</td></tr>
+        <tr><td>10 min</td><td>Acte V — Le musée</td><td>Rappeler le mythe d’Œdipe ; faire décrire le sphinx.</td><td>Q13 à Q17 : sphinx, énigme, Œdipe, Poséidon.</td></tr>
+        <tr><td>8 min</td><td>Acte VI — Sounion</td><td>Faire nommer la pêche et définir la littoralisation.</td><td>Q18 et Q19 : port, côte, définition.</td></tr>
+        <tr><td>5 min</td><td>Carnet</td><td>Faire relire les conclusions ; ramasser les feuilles.</td><td>Ouvrent le carnet, vérifient, terminent.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Corrigé des 19 questions</h2>
+    <p class="lead">Une réponse par question. Les formulations des élèves peuvent varier : on évalue la présence des idées, pas la reproduction mot à mot.</p>
+    <div class="corrige" id="corrigeList"></div>
+  </section>
+
+  <section>
+    <h2>Conseils et différenciation</h2>
+    <div class="conseils">
+      <div class="conseil"><h3>Le binôme</h3><p>Un élève tient l’iPad, l’autre écrit. Inverser les rôles à chaque acte. Les deux doivent pouvoir justifier la réponse.</p></div>
+      <div class="conseil"><h3>Les coups de pouce</h3><p>Ils relancent sans donner la réponse. Autoriser deux coups de pouce par acte, puis demander une phrase personnelle.</p></div>
+      <div class="conseil"><h3>Les réponses</h3><p>Exiger des phrases complètes. Accepter les mots-clés au brouillon, mais faire rédiger la réponse finale sur la feuille.</p></div>
+      <div class="conseil"><h3>Le bouton Wifi</h3><p>Il ouvre une recherche internet. À utiliser seulement si le réseau le permet ; les documents de l’application suffisent le plus souvent.</p></div>
+      <div class="conseil"><h3>Différenciation</h3><p>Pour les élèves en difficulté : proposer les questions une par une, faire reformuler la consigne, accepter une réponse en deux phrases.</p></div>
+      <div class="conseil"><h3>Évaluation</h3><p>1 point par question (19) + 1 point pour la qualité de la rédaction = 20. Les questions interactives (6, 9, 12, 16, 18) peuvent être vérifiées dans l’application.</p></div>
+    </div>
+  </section>
+
+  <section class="credits">
+    <p class="credit-title">Crédits et sources</p>
+    <p>D’après l’enquête n° 2 « Le monde des cités grecques » de <b>Yannick Sanchez</b> (2019, révisée en 2026).</p>
+    <p>Adaptation interactive, récit, interface et illustrations SVG originales : 2026. Aucun scan de manuel n’est utilisé dans l’application.</p>
+    <p>Forme inspirée de <i>Mystère en Égypte</i>, du même atelier. Activité intégrée à Clio.</p>
+    <p>Fichiers : <code>index.html</code> (élève) · <code>prof.html</code> (professeur) · <code>data.js</code> · <code>art.js</code> · <code>app.js</code>.</p>
+  </section>
+</main>
+
+<div id="printArea"></div>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  'use strict';
+  const CODE = '2026';
+  const gate = document.getElementById('gate');
+  const form = document.getElementById('gateForm');
+  const input = document.getElementById('code');
+  const err = document.getElementById('err');
+  const $ = (s) => document.querySelector(s);
+  const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  function unlock() {
+    gate.classList.add('hidden');
+    sessionStorage.setItem('grece-prof', 'ok');
+  }
+  if (sessionStorage.getItem('grece-prof') === 'ok') gate.classList.add('hidden');
+  if (new URLSearchParams(location.search).get('code') === CODE) unlock();
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (input.value.trim() === CODE) unlock();
+    else { err.textContent = 'Code incorrect. Réessayez.'; input.select(); }
+  });
+  input.focus();
+
+  const NOTES = {
+    q1: 'On accepte 850–950 km et 9–11 h selon l’itinéraire et les pauses. L’important est la méthode : échelle, route, vitesse moyenne.',
+    q2: 'Adriatique puis Ionienne ; la Méditerranée au sens large. Ne pas exiger l’ordre des mers.',
+    q3: 'Péloponnèse ; l’Achaïe est la région administrative. Accepter les deux réponses.',
+    q4: 'Δελφοί = Delphes. Le sanctuaire d’Apollon, au pied du mont Parnasse.',
+    q5: 'Sanctuaire : lieu sacré consacré à un dieu. Panhellénique : qui rassemble tous les Grecs. Ne pas confondre avec « panthéon ».',
+    q6: 'Apollon. Le temple principal, l’oracle et les jeux Pythiques lui sont consacrés.',
+    q7: 'Le stade accueille les concours sportifs ; les jeux Pythiques ont lieu tous les quatre ans ; le vainqueur reçoit une couronne de laurier.',
+    q8: 'La Pythie est la prêtresse d’Apollon ; elle transmet les oracles du dieu, souvent de façon ambiguë.',
+    q9: 'Athènes et Athéna. La chouette et l’olivier sont les symboles de la cité.',
+    q10: 'L’Acropole est la « ville haute » fortifiée, centre religieux de la cité ; le Parthénon est dédié à Athéna.',
+    q11: 'Une cité = un territoire (asty + chôra) et une communauté de citoyens. Le port est fréquent mais pas obligatoire.',
+    q12: 'Le musée de l’Acropole (ΜΟΥΣΕΙΟ ΑΚΡΟΠΟΛΗΣ).',
+    q13: 'Corps de lion, ailes d’oiseau, tête de femme ; créature gardienne qui pose une énigme.',
+    q14: 'L’homme : bébé à quatre pattes, adulte sur deux jambes, vieillard avec une canne.',
+    q15: 'Il tue son père Laïos, puis épouse sa mère Jocaste : parricide et inceste, la prophétie s’accomplit.',
+    q16: 'Poséidon, dieu de la mer, reconnaissable à son trident.',
+    q17: 'Au cap Sounion, à la pointe sud de l’Attique (environ 70 km d’Athènes par la route).',
+    q18: 'La pêche : barques, filets, port de pêche.',
+    q19: 'La littoralisation est la concentration croissante des populations et des activités sur les littoraux.'
+  };
+
+  const questions = Object.values(GREECE.QUESTIONS).sort((a, b) => a.n - b.n);
+  const typeLabel = { open: 'Rédaction', choice: 'QCM', duo: 'Choix double', ticket: 'Billet' };
+
+  function answerHtml(q) {
+    if (q.kind === 'choice') {
+      return `<b>Bonne réponse : ${esc(q.options[q.correct])}.</b> ${esc(q.answer)}`;
+    }
+    if (q.kind === 'duo') {
+      const parts = q.parts.map((p) => `${esc(p.label)} : <b>${esc(p.options[p.correct])}</b>`).join(' · ');
+      return `${parts}. ${esc(q.answer)}`;
+    }
+    if (q.kind === 'ticket') {
+      return `<b>Au musée de l’Acropole</b> (zone ΜΟΥΣΕΙΟ ΑΚΡΟΠΟΛΗΣ). ${esc(q.answer)}`;
+    }
+    return esc(q.answer);
+  }
+
+  function renderCorrige() {
+    const host = document.getElementById('corrigeList');
+    host.innerHTML = questions.map((q) => `
+      <article class="qitem">
+        <div class="qn">${q.n}</div>
+        <div>
+          <h3>${esc(q.title)}<span class="type">${typeLabel[q.kind] || 'Question'}</span></h3>
+          <p class="qp">${esc(q.prompt)}${q.sub ? '<br><i>' + esc(q.sub) + '</i>' : ''}</p>
+          <p class="qa">${answerHtml(q)}</p>
+          ${NOTES[q.id] ? `<p class="note">${esc(NOTES[q.id])}</p>` : ''}
+        </div>
+      </article>`).join('');
+  }
+
+  function sheetHtml() {
+    const rows = questions.map((q) => `
+      <div class="pq">
+        <div class="pn">Question ${q.n} — ${esc(q.title)}</div>
+        <div class="pp">${esc(q.prompt)}${q.sub ? '<br><i>' + esc(q.sub) + '</i>' : ''}</div>
+        <div class="pl"></div><div class="pl"></div><div class="pl"></div>
+      </div>`).join('');
+    return `<div class="sheet">
+      <h1>Le monde des cités grecques — mon carnet d’enquête</h1>
+      <p class="meta">Sur la piste de Théodoros · Histoire · 6<sup>e</sup> · Nom : ................................ Prénom : ................................ Classe : ........</p>
+      ${rows}
+      <p class="foot">Le monde des cités grecques · d’après l’enquête de Yannick Sanchez · adaptation 2026</p>
+    </div>`;
+  }
+
+  function keyHtml() {
+    const items = questions.map((q) => `<li><span class="kn">Question ${q.n} — ${esc(q.title)} :</span> ${answerHtml(q)}${NOTES[q.id] ? ' <i>' + esc(NOTES[q.id]) + '</i>' : ''}</li>`).join('');
+    return `<div class="key">
+      <h1>Corrigé — Le monde des cités grecques</h1>
+      <p class="meta">19 questions · 1 point par question + 1 point de rédaction = 20</p>
+      <ol>${items}</ol>
+      <p class="bar"><b>Barème :</b> 19 points de connaissances + 1 point pour la qualité des phrases. Les questions 6, 9, 12, 16 et 18 sont interactives et peuvent être vérifiées dans l’application.</p>
+    </div>`;
+  }
+
+  function printContent(kind) {
+    const area = document.getElementById('printArea');
+    area.innerHTML = kind === 'key' ? keyHtml() : sheetHtml();
+    document.body.classList.add('printing');
+    setTimeout(() => window.print(), 60);
+  }
+
+  window.addEventListener('afterprint', () => document.body.classList.remove('printing'));
+
+  document.querySelectorAll('[data-print]').forEach((btn) => {
+    btn.addEventListener('click', () => printContent(btn.dataset.print));
+  });
+
+  renderCorrige();
+})();
+</script>
+</body>
+</html>

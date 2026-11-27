@@ -1,0 +1,17 @@
+{
+  "name": "Le monde des cités grecques",
+  "short_name": "Cités grecques",
+  "description": "Jeu de piste interactif pour la classe de 6e : sur la piste de Théodoros, de Montpellier au cap Sounion.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#050f16",
+  "theme_color": "#050f16",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ]
+}

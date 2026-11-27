@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="72%">
+      <stop offset="0" stop-color="#123642"/>
+      <stop offset=".58" stop-color="#071a24"/>
+      <stop offset="1" stop-color="#03090e"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7dfae"/>
+      <stop offset=".55" stop-color="#e2b264"/>
+      <stop offset="1" stop-color="#a8782d"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#e2b264" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#e2b264" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <g fill="#f4ead6" opacity=".5">
+    <circle cx="70" cy="86" r="2"/><circle cx="118" cy="52" r="1.4"/><circle cx="410" cy="72" r="2.2"/>
+    <circle cx="452" cy="128" r="1.4"/><circle cx="62" cy="410" r="1.6"/><circle cx="444" cy="388" r="1.8"/>
+  </g>
+  <circle cx="256" cy="256" r="224" fill="url(#halo)"/>
+  <circle cx="256" cy="256" r="196" fill="#0b2028" stroke="#e2b264" stroke-width="7"/>
+  <circle cx="256" cy="256" r="176" fill="none" stroke="#e2b264" stroke-width="2" opacity=".45"/>
+  <g fill="url(#gold)">
+    <ellipse cx="256" cy="276" rx="74" ry="92"/>
+    <circle cx="256" cy="188" r="56"/>
+    <path d="M206 148l-12-38 34 22M306 148l12-38-34 22"/>
+    <path d="M176 240c-26 24-26 66 0 92 18-26 20-64 0-92z" opacity=".55"/>
+    <path d="M336 240c26 24 26 66 0 92-18-26-20-64 0-92z" opacity=".55"/>
+    <path d="M226 354l-8 18m30-18 4 18M286 354l8 18m-30-18-4 18" stroke="#e2b264" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <g>
+    <circle cx="232" cy="184" r="21" fill="#071a24"/>
+    <circle cx="280" cy="184" r="21" fill="#071a24"/>
+    <circle cx="232" cy="184" r="9" fill="#f7dfae"/>
+    <circle cx="280" cy="184" r="9" fill="#f7dfae"/>
+    <circle cx="232" cy="184" r="4" fill="#071a24"/>
+    <circle cx="280" cy="184" r="4" fill="#071a24"/>
+    <path d="M246 208l10 14 10-14z" fill="#a8782d"/>
+  </g>
+  <g fill="none" stroke="url(#gold)" stroke-width="4" stroke-linecap="round" opacity=".9">
+    <path d="M112 300c-24-18-34-42-30-66 22 6 36 24 42 46"/>
+    <path d="M106 278c-12-2-22-8-28-18 12-2 22 2 28 10"/>
+    <path d="M400 300c24-18 34-42 30-66-22 6-36 24-42 46"/>
+    <path d="M406 278c12-2 22-8 28-18-12-2-22 2-28 10"/>
+  </g>
+  <text x="256" y="438" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="38" letter-spacing="8" fill="url(#gold)">ΑΘΕ</text>
+</svg>
